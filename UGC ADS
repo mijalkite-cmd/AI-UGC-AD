@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UGC AI Studio · All-in-One Ad Tools</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #070a0f;
+      background-image: radial-gradient(circle at 20% 30%, #0f1826 0%, #070a0f 70%);
+      font-family: 'Inter', sans-serif;
+      color: #eef2f8;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 1.5rem 2rem 3rem;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0 2.5rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: linear-gradient(145deg, #2563eb, #7c3aed, #ec4899);
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      box-shadow: 0 8px 24px -6px #7c3aed90;
+    }
+
+    .logo-text h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #b5c9fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #8e9fb1;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #b0c0d4;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-links a.active {
+      color: #60a5fa;
+    }
+
+    .btn-signup {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      padding: 0.6rem 1.5rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 22px -6px #2563eb90;
+      transition: all 0.2s;
+    }
+
+    .btn-signup:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -6px #2563eb90;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0 4rem;
+      flex-wrap: wrap;
+      gap: 2.5rem;
+    }
+
+    .hero-content {
+      flex: 1 1 520px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      padding: 0.45rem 1.1rem;
+      border-radius: 60px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #9bb9ff;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero h2 {
+      font-size: 3.4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h2 .gradient-text {
+      background: linear-gradient(135deg, #60a5fa, #c084fc, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      color: #96a9c2;
+      max-width: 560px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      border: none;
+      color: white;
+      padding: 0.95rem 2.1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 14px 30px -8px #2563eb;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 38px -8px #2563eb;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1.5px solid #2e3a4e;
+      color: #d0def0;
+      padding: 0.95rem 2.1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      border-color: #5b7bb9;
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2.8rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item h4 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .stat-item p {
+      font-size: 0.82rem;
+      color: #7a8ba3;
+      margin-top: 0.1rem;
+    }
+
+    .hero-visual {
+      flex: 1 1 380px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-card {
+      background: linear-gradient(145deg, #121a28, #0d1420);
+      border-radius: 36px;
+      padding: 1.8rem 1.8rem 1.5rem;
+      border: 1px solid #1e2b3e;
+      box-shadow: 0 35px 60px -25px #000000b0;
+      max-width: 400px;
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::after {
+      content: '';
+      position: absolute;
+      top: -40%;
+      right: -20%;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, #7c3aed30 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .hero-card-header {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #2d3f5a;
+    }
+
+    .dot:first-child { background: #f87171; }
+    .dot:nth-child(2) { background: #fbbf24; }
+    .dot:nth-child(3) { background: #34d399; }
+
+    .hero-card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+    }
+
+    .media-preview-row {
+      display: flex;
+      gap: 0.8rem;
+    }
+
+    .media-thumb {
+      flex: 1;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      background: #0b111c;
+      border: 1px solid #1f2c3f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      color: #60a5fa;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .media-thumb i {
+      font-size: 1.4rem;
+    }
+
+    .media-thumb.video {
+      color: #f472b6;
+      border-color: #3a2a3a;
+    }
+
+    .hero-card-footer {
+      margin-top: 1.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid #1b2536;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.78rem;
+      color: #8e9fb1;
+    }
+
+    .hero-card-footer i {
+      color: #34d399;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin: 3.5rem 0 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .section-title h3 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .section-title p {
+      color: #8e9fb1;
+      font-size: 0.95rem;
+      max-width: 540px;
+      margin-top: 0.3rem;
+    }
+
+    .section-title a {
+      color: #60a5fa;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    /* ===== FILTER TABS ===== */
+    .filter-tabs {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    .filter-tab {
+      background: #101721;
+      border: 1px solid #1d2a3c;
+      color: #96a9c2;
+      padding: 0.55rem 1.3rem;
+      border-radius: 60px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .filter-tab:hover {
+      border-color: #2c3d56;
+      color: #d0def0;
+    }
+
+    .filter-tab.active {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 8px 20px -6px #2563eb90;
+    }
+
+    /* ===== TOOLS GRID ===== */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1.6rem;
+    }
+
+    .tool-card {
+      background: #0f1622;
+      border: 1px solid #1d2a3c;
+      border-radius: 28px;
+      padding: 1.8rem 1.6rem 1.6rem;
+      transition: all 0.25s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #ec4899);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-6px);
+      border-color: #2c3d56;
+      background: #131d2b;
+      box-shadow: 0 28px 40px -18px #000000c0;
+    }
+
+    .tool-card:hover::before {
+      opacity: 1;
+    }
+
+    .tool-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem;
+    }
+
+    .tool-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 18px;
+      background: #1a2538;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: #60a5fa;
+    }
+
+    .tool-icon.pink { color: #f472b6; background: #2a1a28; }
+    .tool-icon.purple { color: #c084fc; background: #221a2e; }
+    .tool-icon.green { color: #34d399; background: #102620; }
+    .tool-icon.orange { color: #fbbf24; background: #2a2010; }
+
+    .tool-media-type {
+      display: flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .media-badge {
+      font-size: 0.62rem;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 30px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .media-badge.image {
+      background: rgba(96, 165, 250, 0.15);
+      color: #93c5fd;
+      border: 1px solid rgba(96, 165, 250, 0.3);
+    }
+
+    .media-badge.video {
+      background: rgba(244, 114, 182, 0.15);
+      color: #f9a8d4;
+      border: 1px solid rgba(244, 114, 182, 0.3);
+    }
+
+    .tool-card h4 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .tool-card p {
+      font-size: 0.85rem;
+      color: #8e9fb1;
+      line-height: 1.55;
+      margin-bottom: 1.3rem;
+      flex: 1;
+    }
+
+    .tool-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    .tool-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #9bb9ff;
+      background: #1a2538;
+      padding: 0.3rem 0.85rem;
+      border-radius: 40px;
+    }
+
+    .tool-tag i {
+      font-size: 0.6rem;
+    }
+
+    .tool-arrow {
+      color: #4d5f78;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .tool-card:hover .tool-arrow {
+      color: #60a5fa;
+      transform: translateX(4px);
+    }
+
+    /* ===== AD TOOLS ROW (compact) ===== */
+    .ad-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.3rem;
+      margin-top: 0.5rem;
+    }
+
+    .ad-tool-card {
+      background: linear-gradient(145deg, #101a27, #0c131e);
+      border: 1px solid #1f2c3f;
+      border-radius: 24px;
+      padding: 1.5rem 1.2rem;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .ad-tool-card:hover {
+      background: #162130;
+      border-color: #2a3e5c;
+      transform: scale(1.02);
+    }
+
+    .ad-tool-card i {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      color: #7c9cf5;
+    }
+
+    .ad-tool-card h5 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+
+    .ad-tool-card span {
+      font-size: 0.75rem;
+      color: #7d90aa;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+
+    .ad-tool-card .mini-badges {
+      display: flex;
+      justify-content: center;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+
+    .mini-badge {
+      font-size: 0.58rem;
+      font-weight: 700;
+      padding: 0.2rem 0.5rem;
+      border-radius: 30px;
+      text-transform: uppercase;
+    }
+
+    .mini-badge.img {
+      background: rgba(96, 165, 250, 0.15);
+      color: #93c5fd;
+    }
+
+    .mini-badge.vid {
+      background: rgba(244, 114, 182, 0.15);
+      color: #f9a8d4;
+    }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, #131f33, #0e1623);
+      border-radius: 40px;
+      padding: 3.2rem 2.8rem;
+      margin: 4.5rem 0 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+      border: 1px solid #1d2e45;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::after {
+      content: '';
+      position: absolute;
+      top: -60%;
+      right: -5%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, #2563eb20 0%, transparent 70%);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    .cta-banner > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cta-banner h3 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-banner p {
+      color: #96a9c2;
+      font-size: 1rem;
+      max-width: 520px;
+    }
+
+    .cta-banner .btn-primary {
+      padding: 1.05rem 2.6rem;
+      font-size: 1.05rem;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 4.5rem;
+      padding-top: 2.2rem;
+      border-top: 1px solid #1a2538;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.85rem;
+      color: #64748b;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #7e8fa8;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #b0c4de;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero h2 { font-size: 2.6rem; }
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem 1rem 2rem; }
+      .nav-links { display: none; }
+      .hero h2 { font-size: 2.1rem; }
+      .section-title h3 { font-size: 1.7rem; }
+      .cta-banner { padding: 2.2rem 1.8rem; }
+      .cta-banner h3 { font-size: 1.6rem; }
+      .hero-stats { gap: 1.6rem; }
+    }
+
+    @media (max-width: 480px) {
+      .hero h2 { font-size: 1.8rem; }
+      .tools-grid { grid-template-columns: 1fr; }
+      .ad-tools-grid { grid-template-columns: 1fr 1fr; }
+      .hero-cta { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-outline { justify-content: center; }
+      .filter-tabs { gap: 0.4rem; }
+      .filter-tab { font-size: 0.75rem; padding: 0.45rem 1rem; }
+    }
+
+    /* ===== HIDDEN FOR FILTER ===== */
+    .hidden-tool {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text">
+        <h1>UGC AI Studio</h1>
+        <span>IMAGE · VIDEO · CAMPAIGNS</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#" class="active">Home</a>
+      <a href="#">Image Tools</a>
+      <a href="#">Video Tools</a>
+      <a href="#">Templates</a>
+      <a href="#" class="btn-signup">Start free →</a>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <i class="fas fa-sparkles"></i> AI-powered ads · Images & Videos
+      </div>
+      <h2>
+        Create <span class="gradient-text">image & video ads</span> that stop the scroll.
+      </h2>
+      <p>
+        One platform, every ad format. Generate UGC videos, static image ads, Reels, TikToks, and Facebook creatives — all powered by AI.
+      </p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary">
+          <i class="fas fa-wand-magic-sparkles"></i> Start creating free
+        </a>
+        <a href="#" class="btn-outline">
+          <i class="fas fa-play"></i> Watch demo
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <h4>18k+</h4>
+          <p>Creatives generated</p>
+        </div>
+        <div class="stat-item">
+          <h4>4.9★</h4>
+          <p>Creator rating</p>
+        </div>
+        <div class="stat-item">
+          <h4>87%</h4>
+          <p>Higher CTR</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-header">
+          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+        </div>
+        <div class="hero-card-content">
+          <div class="media-preview-row">
+            <div class="media-thumb">
+              <i class="fas fa-image"></i>
+              <span>Image Ad</span>
+            </div>
+            <div class="media-thumb video">
+              <i class="fas fa-video"></i>
+              <span>UGC Video</span>
+            </div>
+            <div class="media-thumb">
+              <i class="fab fa-instagram"></i>
+              <span>Reel</span>
+            </div>
+          </div>
+          <div class="media-preview-row">
+            <div class="media-thumb video">
+              <i class="fab fa-tiktok"></i>
+              <span>TikTok</span>
+            </div>
+            <div class="media-thumb">
+              <i class="fab fa-facebook-f"></i>
+              <span>FB Ad</span>
+            </div>
+            <div class="media-thumb">
+              <i class="fas fa-star"></i>
+              <span>Review</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-card-footer">
+          <i class="fas fa-circle-check"></i>
+          <span>AI generates scripts, visuals & copy in seconds</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAIN TOOLS GRID ===== -->
+  <div class="section-title">
+    <div>
+      <h3>🔥 All-in-one ad toolkit</h3>
+      <p>Every tool creates high-converting creatives — choose image, video, or both.</p>
+    </div>
+    <a href="#">View all tools →</a>
+  </div>
+
+  <!-- Filter tabs -->
+  <div class="filter-tabs">
+    <button class="filter-tab active" data-filter="all"><i class="fas fa-layer-group"></i> All tools</button>
+    <button class="filter-tab" data-filter="image"><i class="fas fa-image"></i> Image only</button>
+    <button class="filter-tab" data-filter="video"><i class="fas fa-video"></i> Video only</button>
+    <button class="filter-tab" data-filter="both"><i class="fas fa-clone"></i> Image + Video</button>
+  </div>
+
+  <div class="tools-grid" id="toolsGrid">
+
+    <!-- CARD 1: UGC Ad Generator (both) -->
+   
+   <div class="tool-card" data-media="both" data-href="ugc-ad-generator.html">
+  <div class="tool-top">
+    <div class="tool-icon"><i class="fas fa-bullhorn"></i></div>
+    <div class="tool-media-type">
+      <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+      <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+    </div>
+  </div>
+  <h4>AI UGC Ad Generator</h4>
+  <p>Create authentic user-generated ads as static images or full video scripts with hooks, CTAs, and visuals.</p>
+  <div class="tool-footer">
+    <span class="AI-UGC-AD"><i class="fas fa-bolt"></i> Popular</span>
+    <i class="fas fa-arrow-right tool-arrow"></i>
+  </div>
+</div>
+    <!-- CARD 2: Instagram Reel Maker (video) -->
+    <div class="tool-card" data-media="video">
+      <div class="tool-top">
+        <div class="tool-icon pink"><i class="fab fa-instagram"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Instagram Reel Maker</h4>
+      <p>Generate viral Reels with trending hooks, shot-by-shot storyboards, captions, hashtags, and audio ideas.</p>
+      <div class="tool-footer">
+        <span class="tool tag"><i class="fas fa-fire"></i> Trending</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 3: TikTok Ad Studio (video) -->
+    <div class="tool-card" data-media="video">
+      <div class="tool-top">
+        <div class="tool-icon purple"><i class="fab fa-tiktok"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>TikTok Ad Studio</h4>
+      <p>Native, entertaining TikTok ads with viral sounds, fast cuts, and hook-driven scripts that convert.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-rocket"></i> New</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 4: Facebook Ad Builder (both) -->
+    <div class="tool-card" data-media="both">
+      <div class="tool-top">
+        <div class="tool-icon"><i class="fab fa-facebook-f"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Facebook Ad Builder</h4>
+      <p>Benefit-driven copy, audience targeting, and creative direction for both static image and video Facebook ads.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-check"></i> Pro</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 5: Unboxing Script AI (video) -->
+    <div class="tool-card" data-media="video">
+      <div class="tool-top">
+        <div class="tool-icon orange"><i class="fas fa-box-open"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Unboxing Script AI</h4>
+      <p>Generate unboxing storyboards and video scripts that build anticipation and showcase product value.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-star"></i> 4.9</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 6: Product Review Writer (both) -->
+    <div class="tool-card" data-media="both">
+      <div class="tool-top">
+        <div class="tool-icon green"><i class="fas fa-star"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Product Review Writer</h4>
+      <p>Authentic review scripts and image-based testimonial ads with pros, cons, and social proof built in.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-bolt"></i> Popular</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 7: Before & After (both) -->
+    <div class="tool-card" data-media="both">
+      <div class="tool-top">
+        <div class="tool-icon pink"><i class="fas fa-arrow-right-arrow-left"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Before & After</h4>
+      <p>Visual transformation scripts and side-by-side image ads that highlight real results and benefits.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-fire"></i> Trending</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 8: Problem → Solution (both) -->
+    <div class="tool-card" data-media="both">
+      <div class="tool-top">
+        <div class="tool-icon purple"><i class="fas fa-puzzle-piece"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Problem → Solution</h4>
+      <p>Frame your product as the ultimate answer to your audience's pain points — in images or video.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-check"></i> Pro</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 9: Static Image Ad Maker (image) -->
+    <div class="tool-card" data-media="image">
+      <div class="tool-top">
+        <div class="tool-icon"><i class="fas fa-image"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+        </div>
+      </div>
+      <h4>Static Image Ad Maker</h4>
+      <p>Generate high-converting static image ads with headlines, subtext, CTAs, and visual layout directions.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-bolt"></i> Fast</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 10: Carousel Ad Builder (image) -->
+    <div class="tool-card" data-media="image">
+      <div class="tool-top">
+        <div class="tool-icon orange"><i class="fas fa-images"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+        </div>
+      </div>
+      <h4>Carousel Ad Builder</h4>
+      <p>Multi-slide carousel ad concepts with per-slide copy, visuals, and a strong closing CTA.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-star"></i> New</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 11: Story Ad Creator (both) -->
+    <div class="tool-card" data-media="both">
+      <div class="tool-top">
+        <div class="tool-icon pink"><i class="fas fa-mobile-screen"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge image"><i class="fas fa-image"></i> IMG</span>
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Story Ad Creator</h4>
+      <p>Vertical story ads for Instagram and Facebook — image or video — with swipe-up CTAs and stickers.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-fire"></i> Trending</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+    <!-- CARD 12: Voiceover & Caption AI (video) -->
+    <div class="tool-card" data-media="video">
+      <div class="tool-top">
+        <div class="tool-icon green"><i class="fas fa-microphone"></i></div>
+        <div class="tool-media-type">
+          <span class="media-badge video"><i class="fas fa-video"></i> VID</span>
+        </div>
+      </div>
+      <h4>Voiceover & Caption AI</h4>
+      <p>Generate voiceover scripts, on-screen captions, and subtitle timing for your video ads.</p>
+      <div class="tool-footer">
+        <span class="tool-tag"><i class="fas fa-check"></i> Pro</span>
+        <i class="fas fa-arrow-right tool-arrow"></i>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== AD TOOLS ROW (compact) ===== -->
+  <div class="section-title" style="margin-top: 4.5rem;">
+    <div>
+      <h3>⚡ Quick ad tools</h3>
+      <p>Fast, focused utilities — each works for both image and video creatives.</p>
+    </div>
+  </div>
+
+  <div class="ad-tools-grid">
+    <div class="ad-tool-card">
+      <i class="fas fa-heading"></i>
+      <h5>Hook Generator</h5>
+      <span>10 hooks per click</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+    <div class="ad-tool-card">
+      <i class="fas fa-hashtag"></i>
+      <h5>Hashtag Finder</h5>
+      <span>Trending tags</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+    <div class="ad-tool-card">
+      <i class="fas fa-caption"></i>
+      <h5>Caption AI</h5>
+      <span>Platform-optimized</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+    <div class="ad-tool-card">
+      <i class="fas fa-chart-simple"></i>
+      <h5>Ad Score</h5>
+      <span>Predict performance</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+    <div class="ad-tool-card">
+      <i class="fas fa-clock"></i>
+      <h5>Best Time</h5>
+      <span>Post scheduler</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+    <div class="ad-tool-card">
+      <i class="fas fa-magic"></i>
+      <h5>CTA Builder</h5>
+      <span>High-converting</span>
+      <div class="mini-badges">
+        <span class="mini-badge img">IMG</span>
+        <span class="mini-badge vid">VID</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== CTA BANNER ===== -->
+  <div class="cta-banner">
+    <div>
+      <h3>Ready to create your first ad?</h3>
+      <p>Join thousands of brands using UGC AI Studio to generate scroll-stopping image and video campaigns.</p>
+    </div>
+    <a href="#" class="btn-primary">
+      <i class="fas fa-wand-magic-sparkles"></i> Start generating
+    </a>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div>© 2026 UGC AI Studio · Made for creators</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Support</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    // ===== FILTER TABS =====
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const toolCards = document.querySelectorAll('.tool-card');
+
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Update active state
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        const filter = tab.dataset.filter;
+
+        toolCards.forEach(card => {
+          const mediaType = card.dataset.media;
+          if (filter === 'all') {
+            card.classList.remove('hidden-tool');
+          } else if (filter === 'image') {
+            // Show cards that support image (image or both)
+            if (mediaType === 'image' || mediaType === 'both') {
+              card.classList.remove('hidden-tool');
+            } else {
+              card.classList.add('hidden-tool');
+            }
+          } else if (filter === 'video') {
+            // Show cards that support video (video or both)
+            if (mediaType === 'video' || mediaType === 'both') {
+              card.classList.remove('hidden-tool');
+            } else {
+              card.classList.add('hidden-tool');
+            }
+          } else if (filter === 'both') {
+            // Show only cards that support both
+            if (mediaType === 'both') {
+              card.classList.remove('hidden-tool');
+            } else {
+              card.classList.add('hidden-tool');
+            }
+          }
+        });
+      });
+    });
+
+    // ===== CARD CLICK HANDLERS (demo redirect) =====
+    toolCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h4').textContent;
+        // In a real app, this would navigate to the tool page
+        alert(`🚀 Opening "${title}" tool...\n\nIn the full app, this would navigate to the AI generator for this tool.`);
+      });
+    });
+
+    // ===== AD TOOL CARD CLICKS =====
+    document.querySelectorAll('.ad-tool-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const title = card.querySelector('h5').textContent;
+        alert(`⚡ Opening "${title}" quick tool...`);
+      });
+    });
+
+  })();
+</script>
+</body>
+</html>
