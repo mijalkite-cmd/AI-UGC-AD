@@ -1,0 +1,1565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UGC AI Studio · Image + Video Ad Generator</title>
+  <!-- Google Fonts + Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #070a0f;
+      background-image: radial-gradient(circle at 20% 30%, #0f1826 0%, #070a0f 70%);
+      font-family: 'Inter', sans-serif;
+      color: #eef2f8;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 1.5rem 2rem 3rem;
+    }
+
+    .container {
+      max-width: 1500px;
+      margin: 0 auto;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logo-icon {
+      background: linear-gradient(145deg, #2563eb, #7c3aed, #ec4899);
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      box-shadow: 0 8px 24px -6px #7c3aed90;
+    }
+
+    .logo-text h1 {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #fff, #b5c9fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      font-size: 0.65rem;
+      font-weight: 500;
+      color: #8e9fb1;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #b0c0d4;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #ffffff;
+    }
+
+    .nav-links a.active {
+      color: #60a5fa;
+    }
+
+    .btn-signup {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      padding: 0.6rem 1.5rem;
+      border-radius: 60px;
+      color: white;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      box-shadow: 0 8px 22px -6px #2563eb90;
+      transition: all 0.2s;
+    }
+
+    .btn-signup:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 30px -6px #2563eb90;
+    }
+
+    /* ===== PAGE HEADER ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .page-header h2 {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(135deg, #fff, #b5c9fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .page-header p {
+      color: #8e9fb1;
+      font-size: 1.05rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .page-header .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(37, 99, 235, 0.12);
+      border: 1px solid rgba(37, 99, 235, 0.3);
+      padding: 0.4rem 1.1rem;
+      border-radius: 60px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #9bb9ff;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== GENERATOR GRID ===== */
+    .generator-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 1024px) {
+      .generator-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+
+    /* ===== CARDS ===== */
+    .card {
+      background: #0f1622;
+      border: 1px solid #1d2a3c;
+      border-radius: 32px;
+      padding: 2rem 2rem 2.2rem;
+      box-shadow: 0 25px 45px -20px #000000b0;
+      transition: border-color 0.2s;
+    }
+
+    .card:hover {
+      border-color: #2a3d56;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .card-header i {
+      font-size: 1.3rem;
+      color: #60a5fa;
+      background: #1a2538;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-header h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+    }
+
+    /* ===== FORM ELEMENTS ===== */
+    .form-group {
+      margin-bottom: 1.4rem;
+    }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #7d90aa;
+      margin-bottom: 0.5rem;
+    }
+
+    .label-hint {
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: #5a6d85;
+      font-size: 0.7rem;
+      margin-left: 0.3rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border-radius: 16px;
+      border: 1.5px solid #1f2c3f;
+      background: #0b111c;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      color: #eef2f8;
+      font-weight: 500;
+      outline: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+      background: #0d1522;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #4d5f78;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 85px;
+    }
+
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 520px) {
+      .row-2 {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+      }
+    }
+
+    /* ===== IMAGE UPLOAD ===== */
+    .image-upload-area {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .upload-box {
+      flex: 1;
+      min-width: 150px;
+      background: #0b111c;
+      border: 2px dashed #2a3d56;
+      border-radius: 20px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upload-box:hover {
+      border-color: #2563eb;
+      background: #0e1828;
+    }
+
+    .upload-box i {
+      font-size: 1.7rem;
+      color: #60a5fa;
+      opacity: 0.9;
+    }
+
+    .upload-box span {
+      font-weight: 500;
+      color: #d0def0;
+      font-size: 0.88rem;
+    }
+
+    .upload-box small {
+      display: block;
+      font-weight: 400;
+      color: #5f7390;
+      font-size: 0.68rem;
+      margin-top: 2px;
+    }
+
+    .image-preview {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      background: #0d1522;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 1.5px solid #1f2c3f;
+      flex-shrink: 0;
+    }
+
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .image-preview i {
+      font-size: 1.8rem;
+      color: #3d4f68;
+    }
+
+    /* ===== GENERATE BUTTON ===== */
+    .generate-btn {
+      width: 100%;
+      background: linear-gradient(145deg, #2563eb, #7c3aed, #ec4899);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 1rem 1.8rem;
+      border: none;
+      border-radius: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 12px 28px -8px #7c3aed80;
+      margin-top: 1.4rem;
+      letter-spacing: -0.01em;
+    }
+
+    .generate-btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px -8px #7c3aed90;
+    }
+
+    .generate-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .generate-btn i {
+      font-size: 1.15rem;
+    }
+
+    /* ===== PREVIEW CARD ===== */
+    .preview-card {
+      position: sticky;
+      top: 1.5rem;
+      background: #0f1622;
+      border: 1px solid #1d2a3c;
+      border-radius: 32px;
+      padding: 2rem 2rem 2.2rem;
+      min-height: 400px;
+    }
+
+    .preview-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .preview-tab {
+      flex: 1;
+      background: #0b111c;
+      border: 1px solid #1f2c3f;
+      color: #7d90aa;
+      padding: 0.7rem 1rem;
+      border-radius: 14px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .preview-tab:hover {
+      border-color: #2c3d56;
+      color: #b0c4de;
+    }
+
+    .preview-tab.active {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 8px 20px -6px #2563eb90;
+    }
+
+    .campaign-output {
+      background: #0b111c;
+      border-radius: 26px;
+      padding: 1.5rem;
+      border: 1px solid #1a2538;
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .output-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #5f7390;
+      flex: 1;
+    }
+
+    .output-placeholder i {
+      font-size: 3.2rem;
+      margin-bottom: 1.2rem;
+      color: #2a3d56;
+    }
+
+    .output-placeholder p {
+      font-weight: 500;
+      font-size: 1rem;
+      color: #7d90aa;
+    }
+
+    .output-placeholder small {
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+      color: #4d5f78;
+    }
+
+    .result-panel {
+      display: none;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .result-panel.active {
+      display: flex;
+    }
+
+    .result-section {
+      background: #0f1622;
+      border-radius: 20px;
+      padding: 1.2rem 1.3rem;
+      border: 1px solid #1d2a3c;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .result-section h3 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #60a5fa;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .result-section h3 i {
+      font-size: 0.8rem;
+    }
+
+    .result-section p, .result-section li {
+      font-size: 0.88rem;
+      color: #c8d6e8;
+      line-height: 1.6;
+    }
+
+    .result-section ul {
+      padding-left: 1.2rem;
+      margin-top: 0.3rem;
+    }
+
+    .result-section ul li {
+      margin-bottom: 0.4rem;
+    }
+
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+    }
+
+    .pill {
+      background: #1a2538;
+      color: #9bb9ff;
+      padding: 0.3rem 0.9rem;
+      border-radius: 40px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border: 1px solid #2a3d56;
+    }
+
+    .highlight {
+      background: #0d1829;
+      border-radius: 14px;
+      padding: 1rem 1.2rem;
+      border-left: 4px solid #2563eb;
+      font-style: italic;
+      color: #b5c9fc;
+      font-weight: 500;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    /* ===== GENERATED IMAGE PREVIEW ===== */
+    .generated-image-wrap {
+      background: #0b111c;
+      border-radius: 20px;
+      padding: 1rem;
+      border: 1px solid #1f2c3f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .generated-image-wrap canvas {
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+      border-radius: 16px;
+      box-shadow: 0 15px 35px -12px #000000b0;
+      display: block;
+    }
+
+    .download-btn {
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      border: none;
+      color: white;
+      padding: 0.7rem 1.6rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .download-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -6px #2563eb90;
+    }
+
+    /* ===== VIDEO STORYBOARD PREVIEW ===== */
+    .video-storyboard {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .video-scene {
+      background: #0b111c;
+      border-radius: 18px;
+      padding: 1rem 1.2rem;
+      border: 1px solid #1f2c3f;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      transition: all 0.2s;
+    }
+
+    .video-scene:hover {
+      border-color: #2a3d56;
+      background: #0d1522;
+    }
+
+    .scene-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #2563eb, #7c3aed);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .scene-content {
+      flex: 1;
+    }
+
+    .scene-time {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #60a5fa;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .scene-desc {
+      font-size: 0.85rem;
+      color: #c8d6e8;
+      line-height: 1.5;
+      margin-bottom: 0.4rem;
+    }
+
+    .scene-visual {
+      font-size: 0.75rem;
+      color: #8e9fb1;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .scene-visual i {
+      color: #7c3aed;
+    }
+
+    /* ===== ANIMATED VIDEO SIMULATION ===== */
+    .video-player-sim {
+      background: #0b111c;
+      border-radius: 20px;
+      border: 1px solid #1f2c3f;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .video-screen {
+      aspect-ratio: 9 / 16;
+      max-width: 260px;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #0d1420, #0a0f18);
+      border-radius: 18px;
+      border: 1px solid #1f2c3f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .video-screen::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #2563eb, #7c3aed, #ec4899);
+      animation: scanline 2.5s ease-in-out infinite;
+    }
+
+    @keyframes scanline {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .video-frame-text {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      line-height: 1.3;
+      animation: fadeInOut 3s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .video-frame-sub {
+      font-size: 0.8rem;
+      color: #9bb9ff;
+      animation: fadeInOut 3s ease-in-out infinite 0.3s;
+    }
+
+    .video-progress {
+      width: 100%;
+      height: 4px;
+      background: #1a2538;
+      border-radius: 4px;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+
+    .video-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #2563eb, #7c3aed);
+      border-radius: 4px;
+      animation: progressFill 8s linear infinite;
+    }
+
+    @keyframes progressFill {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* ===== SPINNER ===== */
+    .spinner {
+      display: inline-block;
+      width: 1.1rem;
+      height: 1.1rem;
+      border: 3px solid rgba(255, 255, 255, 0.25);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 0.7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #1a2538;
+      border: 1px solid #2a3d56;
+      color: #eef2f8;
+      padding: 1rem 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 25px 45px -20px #000000;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transform: translateY(120%);
+      transition: transform 0.35s ease;
+      z-index: 999;
+      max-width: 380px;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    .toast i {
+      color: #34d399;
+      font-size: 1.1rem;
+    }
+
+    .toast.error i {
+      color: #f87171;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid #1a2538;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: #7e8fa8;
+      text-decoration: none;
+    }
+
+    .footer-links a:hover {
+      color: #b0c4de;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem 1rem 2rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      .page-header h2 {
+        font-size: 2rem;
+      }
+      .card, .preview-card {
+        padding: 1.5rem 1.3rem;
+      }
+      .toast {
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        max-width: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h2 {
+        font-size: 1.7rem;
+      }
+      .card-header h2 {
+        font-size: 1.1rem;
+      }
+      .preview-tab {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon"><i class="fas fa-bolt"></i></div>
+      <div class="logo-text">
+        <h1>UGC AI Studio</h1>
+        <span>IMAGE + VIDEO AD GENERATOR</span>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#" class="active">Ad Generator</a>
+      <a href="#">Templates</a>
+      <a href="#">Pricing</a>
+      <a href="#" class="btn-signup">Start free →</a>
+    </div>
+  </nav>
+
+  <!-- ===== PAGE HEADER ===== -->
+  <div class="page-header">
+    <div class="badge">
+      <i class="fas fa-wand-magic-sparkles"></i> AI generates both image & video ads
+    </div>
+    <h2>Create complete UGC ad campaigns</h2>
+    <p>Fill in your product details and generate both a static image ad and a video storyboard — all in one click.</p>
+  </div>
+
+  <!-- ===== GENERATOR GRID ===== -->
+  <div class="generator-grid">
+
+    <!-- LEFT: INPUT FORM -->
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-pen-ruler"></i>
+        <h2>Product details</h2>
+      </div>
+
+      <!-- Product image upload -->
+      <div class="form-group">
+        <label>Product image <span class="label-hint">(optional — used in generated ad)</span></label>
+        <div class="image-upload-area">
+          <div class="upload-box" id="uploadBox">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <div>
+              <span>Upload image</span>
+              <small>PNG, JPG up to 5MB</small>
+            </div>
+          </div>
+          <div class="image-preview" id="imagePreview">
+            <i class="fas fa-image"></i>
+          </div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+      </div>
+
+      <!-- Product name & brand -->
+      <div class="row-2">
+        <div class="form-group">
+          <label>Product name</label>
+          <input type="text" id="productName" placeholder="e.g. HydraGlow Serum" value="HydraGlow Vitamin C Serum">
+        </div>
+        <div class="form-group">
+          <label>Brand name</label>
+          <input type="text" id="brandName" placeholder="e.g. Lumière" value="Lumière">
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label>Product description</label>
+        <textarea id="productDesc" placeholder="Describe your product...">A lightweight, fast-absorbing vitamin C serum that brightens skin and reduces dark spots. Clinically proven to boost radiance in 7 days.</textarea>
+      </div>
+
+      <!-- Price & benefits -->
+      <div class="row-2">
+        <div class="form-group">
+          <label>Price ($)</label>
+          <input type="text" id="productPrice" placeholder="29.99" value="34.99">
+        </div>
+        <div class="form-group">
+          <label>Key benefits</label>
+          <input type="text" id="productBenefits" placeholder="Brightening, anti-aging" value="Brightening, anti-aging, vegan">
+        </div>
+      </div>
+
+      <!-- Target audience -->
+      <div class="form-group">
+        <label>Target audience</label>
+        <input type="text" id="targetAudience" placeholder="e.g. Women 25-40, skincare enthusiasts" value="Women 25-45, skincare lovers">
+      </div>
+
+      <!-- Category + Campaign type -->
+      <div class="row-2">
+        <div class="form-group">
+          <label>Category</label>
+          <select id="category">
+            <option value="Skincare" selected>Skincare</option>
+            <option value="Haircare">Haircare</option>
+            <option value="Makeup & Beauty">Makeup & Beauty</option>
+            <option value="Clothing & Fashion">Clothing & Fashion</option>
+            <option value="Jewelry & Accessories">Jewelry & Accessories</option>
+            <option value="Food & Beverage">Food & Beverage</option>
+            <option value="Technology">Technology</option>
+            <option value="Fitness & Lifestyle">Fitness & Lifestyle</option>
+            <option value="Home Products">Home Products</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Campaign type</label>
+          <select id="campaignType">
+            <option value="UGC Ad" selected>UGC Ad</option>
+            <option value="Instagram Reel">Instagram Reel</option>
+            <option value="TikTok Ad">TikTok Ad</option>
+            <option value="Facebook Ad">Facebook Ad</option>
+            <option value="Product Promotion">Product Promotion</option>
+            <option value="Product Launch">Product Launch</option>
+            <option value="Brand Awareness">Brand Awareness</option>
+            <option value="Sales Campaign">Sales Campaign</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Video style -->
+      <div class="form-group">
+        <label>Video style</label>
+        <select id="videoStyle">
+          <option value="Influencer UGC" selected>Influencer UGC</option>
+          <option value="Unboxing">Unboxing</option>
+          <option value="Product Review">Product Review</option>
+          <option value="Before & After">Before & After</option>
+          <option value="Problem → Solution">Problem → Solution</option>
+          <option value="Testimonial">Testimonial</option>
+        </select>
+      </div>
+
+      <button class="generate-btn" id="generateBtn">
+        <i class="fas fa-wand-magic-sparkles"></i> Generate Image + Video Ads
+      </button>
+    </div>
+
+    <!-- RIGHT: AI OUTPUT PREVIEW -->
+    <div class="preview-card">
+      <div class="card-header">
+        <i class="fas fa-clapperboard"></i>
+        <h2>AI generated ads</h2>
+      </div>
+
+      <!-- Preview tabs -->
+      <div class="preview-tabs">
+        <button class="preview-tab active" data-tab="image">
+          <i class="fas fa-image"></i> Image Ad
+        </button>
+        <button class="preview-tab" data-tab="video">
+          <i class="fas fa-video"></i> Video Ad
+        </button>
+      </div>
+
+      <div class="campaign-output">
+        <!-- Placeholder -->
+        <div class="output-placeholder" id="outputPlaceholder">
+          <i class="fas fa-lightbulb"></i>
+          <p>Your AI-generated ads will appear here</p>
+          <small>Fill product details & click generate</small>
+        </div>
+
+        <!-- Image result panel -->
+        <div class="result-panel" id="imageResult">
+          <div class="result-section">
+            <h3><i class="fas fa-image"></i> Generated Image Ad</h3>
+            <div class="generated-image-wrap">
+              <canvas id="adCanvas" width="600" height="600"></canvas>
+              <button class="download-btn" id="downloadImageBtn">
+                <i class="fas fa-download"></i> Download Image
+              </button>
+            </div>
+          </div>
+
+          <div class="result-section">
+            <h3><i class="fas fa-align-left"></i> Image ad copy</h3>
+            <p class="highlight" id="imageAdCopy">—</p>
+          </div>
+
+          <div class="result-section">
+            <h3><i class="fas fa-tags"></i> Headline & CTA</h3>
+            <p id="imageHeadline">—</p>
+            <div class="pill-group" id="imagePills"></div>
+          </div>
+        </div>
+
+        <!-- Video result panel -->
+        <div class="result-panel" id="videoResult">
+          <div class="result-section">
+            <h3><i class="fas fa-video"></i> Video Ad Preview</h3>
+            <div class="video-player-sim">
+              <div class="video-screen">
+                <div class="video-frame-text" id="videoFrameText">Loading...</div>
+                <div class="video-frame-sub" id="videoFrameSub">Your product here</div>
+                <div class="video-progress">
+                  <div class="video-progress-bar"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="result-section">
+            <h3><i class="fas fa-film"></i> Video storyboard</h3>
+            <div class="video-storyboard" id="videoStoryboard">
+              <!-- filled by JS -->
+            </div>
+          </div>
+
+          <div class="result-section">
+            <h3><i class="fas fa-microphone"></i> Voiceover script</h3>
+            <p class="highlight" id="videoVoiceover">—</p>
+          </div>
+
+          <div class="result-section">
+            <h3><i class="fas fa-hashtag"></i> Caption & hashtags</h3>
+            <p id="videoCaption">—</p>
+            <p id="videoHashtags" style="margin-top:0.5rem; color:#9bb9ff; font-weight:600; font-size:0.8rem;">—</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div>© 2026 UGC AI Studio · Image + Video Ad Generator</div>
+    <div class="footer-links">
+      <a href="#">Privacy</a>
+      <a href="#">Terms</a>
+      <a href="#">Support</a>
+      <a href="#">Contact</a>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ===== TOAST NOTIFICATION ===== -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMessage">Ads generated successfully!</span>
+</div>
+
+<script>
+  (function() {
+    // ===== DOM ELEMENTS =====
+    const fileInput = document.getElementById('fileInput');
+    const uploadBox = document.getElementById('uploadBox');
+    const imagePreview = document.getElementById('imagePreview');
+    const generateBtn = document.getElementById('generateBtn');
+    const outputPlaceholder = document.getElementById('outputPlaceholder');
+    const imageResult = document.getElementById('imageResult');
+    const videoResult = document.getElementById('videoResult');
+    const toast = document.getElementById('toast');
+    const toastMessage = document.getElementById('toastMessage');
+    const adCanvas = document.getElementById('adCanvas');
+    const downloadImageBtn = document.getElementById('downloadImageBtn');
+
+    // Preview tabs
+    const previewTabs = document.querySelectorAll('.preview-tab');
+
+    // Input fields
+    const productName = document.getElementById('productName');
+    const brandName = document.getElementById('brandName');
+    const productDesc = document.getElementById('productDesc');
+    const productPrice = document.getElementById('productPrice');
+    const productBenefits = document.getElementById('productBenefits');
+    const targetAudience = document.getElementById('targetAudience');
+    const category = document.getElementById('category');
+    const campaignType = document.getElementById('campaignType');
+    const videoStyle = document.getElementById('videoStyle');
+
+    // State
+    let currentImageDataUrl = null;
+    let isGenerating = false;
+    let currentTab = 'image';
+    let currentProductImage = null; // for canvas
+
+    // ===== TOAST HELPER =====
+    function showToast(message, isError = false) {
+      toastMessage.textContent = message;
+      toast.classList.toggle('error', isError);
+      const icon = toast.querySelector('i');
+      icon.className = isError ? 'fas fa-exclamation-circle' : 'fas fa-check-circle';
+      toast.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3200);
+    }
+
+    // ===== IMAGE UPLOAD =====
+    uploadBox.addEventListener('click', () => fileInput.click());
+
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        showToast('Please upload a valid image file.', true);
+        return;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('Image too large. Max size is 5MB.', true);
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        currentImageDataUrl = ev.target.result;
+        imagePreview.innerHTML = `<img src="${currentImageDataUrl}" alt="Product preview">`;
+        showToast('Image uploaded successfully!');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Drag & drop
+    uploadBox.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadBox.style.borderColor = '#2563eb';
+      uploadBox.style.background = '#0e1828';
+    });
+    uploadBox.addEventListener('dragleave', () => {
+      uploadBox.style.borderColor = '#2a3d56';
+      uploadBox.style.background = '#0b111c';
+    });
+    uploadBox.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadBox.style.borderColor = '#2a3d56';
+      uploadBox.style.background = '#0b111c';
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        if (file.size > 5 * 1024 * 1024) {
+          showToast('Image too large. Max size is 5MB.', true);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          currentImageDataUrl = ev.target.result;
+          imagePreview.innerHTML = `<img src="${currentImageDataUrl}" alt="Product preview">`;
+          showToast('Image uploaded successfully!');
+        };
+        reader.readAsDataURL(file);
+      } else {
+        showToast('Please drop a valid image file.', true);
+      }
+    });
+
+    // ===== PREVIEW TABS =====
+    previewTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        previewTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+
+        if (currentTab === 'image') {
+          imageResult.classList.add('active');
+          videoResult.classList.remove('active');
+        } else {
+          videoResult.classList.add('active');
+          imageResult.classList.remove('active');
+        }
+      });
+    });
+
+    // ===== CANVAS IMAGE AD GENERATOR =====
+    function drawImageAd(data) {
+      const ctx = adCanvas.getContext('2d');
+      const W = 600, H = 600;
+
+      // Background gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, '#0f1826');
+      bgGrad.addColorStop(0.5, '#131d2e');
+      bgGrad.addColorStop(1, '#1a0f28');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Decorative circles
+      ctx.globalAlpha = 0.08;
+      ctx.fillStyle = '#2563eb';
+      ctx.beginPath();
+      ctx.arc(W * 0.85, H * 0.15, 180, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ec4899';
+      ctx.beginPath();
+      ctx.arc(W * 0.1, H * 0.9, 150, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+
+      // Top accent bar
+      const accentGrad = ctx.createLinearGradient(0, 0, W, 0);
+      accentGrad.addColorStop(0, '#2563eb');
+      accentGrad.addColorStop(0.5, '#7c3aed');
+      accentGrad.addColorStop(1, '#ec4899');
+      ctx.fillStyle = accentGrad;
+      ctx.fillRect(0, 0, W, 6);
+
+      // Brand name top-left
+      ctx.font = '600 16px Inter, sans-serif';
+      ctx.fillStyle = '#9bb9ff';
+      ctx.textAlign = 'left';
+      ctx.fillText(data.brand.toUpperCase(), 36, 50);
+
+      // Category pill top-right
+      ctx.font = '600 13px Inter, sans-serif';
+      const catText = data.category.toUpperCase();
+      const catWidth = ctx.measureText(catText).width + 28;
+      ctx.fillStyle = 'rgba(37, 99, 235, 0.2)';
+      roundRect(ctx, W - 36 - catWidth, 32, catWidth, 28, 14);
+      ctx.fill();
+      ctx.fillStyle = '#9bb9ff';
+      ctx.textAlign = 'center';
+      ctx.fillText(catText, W - 36 - catWidth / 2, 51);
+
+      // Product image (if uploaded)
+      let imgTop = 90;
+      if (currentProductImage && currentProductImage.complete) {
+        const imgSize = 200;
+        const imgX = (W - imgSize) / 2;
+        // Rounded rect background for image
+        ctx.save();
+        roundRect(ctx, imgX - 8, imgTop - 8, imgSize + 16, imgSize + 16, 24);
+        ctx.fillStyle = 'rgba(255,255,255,0.04)';
+        ctx.fill();
+        ctx.restore();
+
+        ctx.save();
+        roundRect(ctx, imgX, imgTop, imgSize, imgSize, 20);
+        ctx.clip();
+        ctx.drawImage(currentProductImage, imgX, imgTop, imgSize, imgSize);
+        ctx.restore();
+
+        imgTop += imgSize + 30;
+      } else {
+        // Placeholder product icon
+        ctx.save();
+        roundRect(ctx, W / 2 - 60, imgTop, 120, 120, 24);
+        ctx.fillStyle = 'rgba(255,255,255,0.04)';
+        ctx.fill();
+        ctx.strokeStyle = '#2a3d56';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        ctx.restore();
+        ctx.font = '48px "Font Awesome 6 Free"';
+        ctx.fillStyle = '#3d4f68';
+        ctx.textAlign = 'center';
+        ctx.fillText('\uf03e', W / 2, imgTop + 78);
+        imgTop += 150;
+      }
+
+      // Product name
+      ctx.textAlign = 'center';
+      ctx.font = '700 30px Inter, sans-serif';
+      ctx.fillStyle = '#ffffff';
+      const nameLines = wrapText(ctx, data.name, W - 80);
+      nameLines.forEach((line, i) => {
+        ctx.fillText(line, W / 2, imgTop + 10 + i * 38);
+      });
+      let y = imgTop + 10 + nameLines.length * 38 + 8;
+
+      // Benefit line
+      ctx.font = '500 18px Inter, sans-serif';
+      ctx.fillStyle = '#9bb9ff';
+      const benefitLine = data.benefits.split(',')[0].trim();
+      ctx.fillText(benefitLine, W / 2, y);
+      y += 36;
+
+      // Price
+      ctx.font = '800 36px Inter, sans-serif';
+      const priceGrad = ctx.createLinearGradient(W/2 - 80, 0, W/2 + 80, 0);
+      priceGrad.addColorStop(0, '#60a5fa');
+      priceGrad.addColorStop(1, '#c084fc');
+      ctx.fillStyle = priceGrad;
+      ctx.fillText('$' + data.price, W / 2, y);
+      y += 44;
+
+      // CTA button
+      const ctaText = 'SHOP NOW';
+      ctx.font = '700 16px Inter, sans-serif';
+      const ctaW = ctx.measureText(ctaText).width + 60;
+      const ctaX = (W - ctaW) / 2;
+      const ctaY = H - 80;
+
+      const ctaGrad = ctx.createLinearGradient(ctaX, ctaY, ctaX + ctaW, ctaY);
+      ctaGrad.addColorStop(0, '#2563eb');
+      ctaGrad.addColorStop(1, '#7c3aed');
+      ctx.fillStyle = ctaGrad;
+      roundRect(ctx, ctaX, ctaY, ctaW, 48, 24);
+      ctx.fill();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'center';
+      ctx.font = '700 16px Inter, sans-serif';
+      ctx.fillText(ctaText, W / 2, ctaY + 31);
+
+      // Brand footer
+      ctx.font = '500 12px Inter, sans-serif';
+      ctx.fillStyle = '#5f7390';
+      ctx.textAlign = 'center';
+      ctx.fillText('Powered by ' + data.brand, W / 2, H - 18);
+    }
+
+    // Helper: rounded rectangle
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    // Helper: wrap text
+    function wrapText(ctx, text, maxWidth) {
+      const words = text.split(' ');
+      const lines = [];
+      let current = '';
+      words.forEach(word => {
+        const test = current ? current + ' ' + word : word;
+        if (ctx.measureText(test).width > maxWidth) {
+          if (current) lines.push(current);
+          current = word;
+        } else {
+          current = test;
+        }
+      });
+      if (current) lines.push(current);
+      return lines;
+    }
+
+    // ===== BUILD CAMPAIGN DATA =====
+    function getCampaignData() {
+      const pName = productName.value.trim() || 'Your Product';
+      const bName = brandName.value.trim() || 'Your Brand';
+      const desc = productDesc.value.trim() || 'a must-have product';
+      const price = productPrice.value.trim() || '29.99';
+      const benefits = productBenefits.value.trim() || 'Amazing benefits';
+      const audience = targetAudience.value.trim() || 'your target audience';
+      const cat = category.value;
+      const campType = campaignType.value;
+      const style = videoStyle.value;
+      const firstBenefit = benefits.split(',')[0].trim() || 'radiant results';
+
+      return { pName, bName, desc, price, benefits, audience, cat, campType, style, firstBenefit };
+    }
+
+    // ===== GENERATE IMAGE AD =====
+    function generateImageAd(data) {
+      // Draw canvas
+      if (currentImageDataUrl) {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          currentProductImage = img;
+          drawImageAd(data);
+        };
+        img.src = currentImageDataUrl;
+        // If image already cached
+        if (img.complete) {
+          currentProductImage = img;
+          drawImageAd(data);
+        }
+      } else {
+        currentProductImage = null;
+        drawImageAd(data);
+      }
+
+      // Set ad copy
+      const adCopy = `✨ ${data.pName} – ${data.firstBenefit} made easy. ${data.desc.substring(0, 110)}... Perfect for ${data.audience}. Shop now at ${data.bName} for $${data.price}. #${data.cat.replace(/\s/g,'')} #UGC`;
+      document.getElementById('imageAdCopy').textContent = `"${adCopy}"`;
+
+      // Headline
+      document.getElementById('imageHeadline').innerHTML = `<strong>${data.bName}</strong> — ${data.pName} · <strong>$${data.price}</strong> · ${data.firstBenefit}`;
+
+      // Pills
+      document.getElementById('imagePills').innerHTML = `
+        <span class="pill">${data.cat}</span>
+        <span class="pill">${data.campType}</span>
+        <span class="pill">${data.style}</span>
+      `;
+    }
+
+    // ===== GENERATE VIDEO AD =====
+    function generateVideoAd(data) {
+      // Frame text (simulated video frames)
+      document.getElementById('videoFrameText').textContent = `"${data.firstBenefit} in 7 days"`;
+      document.getElementById('videoFrameSub').textContent = `${data.pName} by ${data.bName}`;
+
+      // Storyboard
+      const shots = [
+        { time: '0–3s', desc: `Hook: "I tried ${data.pName} and I'm never going back."`, visual: 'Close-up on product, bold on-screen text' },
+        { time: '3–7s', desc: `Problem: Show struggle with ${data.firstBenefit}`, visual: 'Quick cuts, relatable reaction' },
+        { time: '7–12s', desc: `Introduce ${data.pName} by ${data.bName}`, visual: 'Product hero shot, texture close-up' },
+        { time: '12–18s', desc: `Demonstrate: ${data.benefits}`, visual: 'Before/after transition, results' },
+        { time: '18–25s', desc: `Testimonial: "I'm obsessed with my results"`, visual: 'Real person, natural lighting' },
+        { time: '25–30s', desc: `CTA: Get yours for $${data.price} — link in bio!`, visual: 'Product + brand logo, end card' }
+      ];
+
+      document.getElementById('videoStoryboard').innerHTML = shots.map((s, i) => `
+        <div class="video-scene">
+          <div class="scene-number">${i + 1}</div>
+          <div class="scene-content">
+            <div class="scene-time">${s.time}</div>
+            <div class="scene-desc">${s.desc}</div>
+            <div class="scene-visual"><i class="fas fa-eye"></i> ${s.visual}</div>
+          </div>
+        </div>
+      `).join('');
+
+      // Voiceover
+      const voiceover = `Hook: "I tried ${data.pName} for 7 days and I'm never going back." Then: Let me show you why. This is ${data.pName} by ${data.bName}. I struggle with ${data.firstBenefit} but after using this for 7 days — wow. It's ${data.desc.substring(0, 90)}. My ${data.benefits.split(',')[1]?.trim() || 'results'} is unreal. Grab yours for $${data.price}. Link in bio!`;
+      document.getElementById('videoVoiceover').textContent = `"${voiceover}"`;
+
+      // Caption & hashtags
+      const caption = `✨ ${data.pName} – ${data.firstBenefit} in just 7 days. Tap to shop 👆`;
+      document.getElementById('videoCaption').textContent = `"${caption}"`;
+
+      const tag = data.cat.replace(/\s/g, '').toLowerCase();
+      const hashtags = `#reels #viral #trending #explore #${tag} #${tag}lover #${data.bName.toLowerCase().replace(/\s/g,'')} #${data.pName.toLowerCase().replace(/\s/g,'')}`;
+      document.getElementById('videoHashtags').textContent = hashtags;
+    }
+
+    // ===== MAIN GENERATE FUNCTION =====
+    function generateAds() {
+      if (isGenerating) return;
+
+      if (!productName.value.trim() || !brandName.value.trim()) {
+        showToast('Please fill in both product name and brand name.', true);
+        return;
+      }
+
+      isGenerating = true;
+      generateBtn.disabled = true;
+      generateBtn.innerHTML = `<span class="spinner"></span> Generating Image + Video...`;
+
+      setTimeout(() => {
+        const data = getCampaignData();
+
+        // Generate both
+        generateImageAd(data);
+        generateVideoAd(data);
+
+        // Show results
+        outputPlaceholder.classList.add('hidden');
+        imageResult.classList.add('active');
+        videoResult.classList.remove('active');
+
+        // Reset tabs to image
+        previewTabs.forEach(t => t.classList.remove('active'));
+        document.querySelector('[data-tab="image"]').classList.add('active');
+
+        // Restore button
+        isGenerating = false;
+        generateBtn.disabled = false;
+        generateBtn.innerHTML = `<i class="fas fa-wand-magic-sparkles"></i> Generate Image + Video Ads`;
+
+        showToast('Image & Video ads generated!');
+
+        // Scroll on smaller screens
+        if (window.innerWidth < 1024) {
+          document.querySelector('.preview-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }, 900);
+    }
+
+    // ===== DOWNLOAD IMAGE =====
+    downloadImageBtn.addEventListener('click', () => {
+      const link = document.createElement('a');
+      link.download = `${productName.value.trim() || 'ugc'}-ad.png`;
+      link.href = adCanvas.toDataURL('image/png');
+      link.click();
+      showToast('Image downloaded!');
+    });
+
+    // ===== EVENT LISTENERS =====
+    generateBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      generateAds();
+    });
+
+    const inputs = document.querySelectorAll('input[type="text"], select');
+    inputs.forEach(input => {
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          generateAds();
+        }
+      });
+    });
+
+  })();
+</script>
+</body>
+</html>
